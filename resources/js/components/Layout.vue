@@ -19,34 +19,3 @@ export default {
 }
 </script>
 
-
-<style scoped>
-.lc-parent {
-    position: relative;
-
-}
-
-.bg-lock::before{
-    content: "";
-        position: absolute;
-        width: 100%;
-        height: 100vh;
-        backdrop-filter: blur(8px);
-}
-
-div.bg-lock {
-    height: 100vh;
-    width: 100%;
-    background-color: linear-gradient(rgba(0, 0, 0, 0.63), rgba(0, 0, 0, 0.623));
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-
-}
-</style>

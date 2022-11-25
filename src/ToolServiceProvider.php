@@ -2,10 +2,13 @@
 
 namespace Visanduma\NovaLockscreen;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Http\Middleware\Authenticate;
+use Laravel\Nova\Menu\Menu;
+use Laravel\Nova\Menu\MenuItem;
 use Laravel\Nova\Nova;
 use Visanduma\NovaLockscreen\Http\Middleware\Authorize;
 
@@ -32,10 +35,17 @@ class ToolServiceProvider extends ServiceProvider
             Nova::provideToScript([
                 'nls' => [
                     'enabled' => config('nova-lockscreen.enabled'),
-                    'background_image' => config('nova-lockscreen.background_image'),
+                    'background_image' => NovaLockscreen::getBackgroundImage(),
                     'excluded_urls' => NovaLockscreen::excludedUrls()
                 ]
             ]);
+        });
+
+
+        Nova::userMenu(function(Request $request,Menu $menu){
+            $menu->append(
+                MenuItem::make('Lock', route('nova-lockscreen.lock'))
+            );
         });
     }
 

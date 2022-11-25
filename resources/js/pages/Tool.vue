@@ -11,8 +11,8 @@
             <div class="mb-6 mt-3">
                 <input v-model="form.password"
                     class="form-control form-input w-full text-center opacity-75 border-none h-12 radius-16"
-                    :class="{ 'form-input-border-error': form.errors.has('password') }" id="password" type="password" ref="password"
-                    name="password" required autocomplete="off" />
+                    :class="{ 'form-input-border-error': form.errors.has('password') }" id="password" type="password"
+                    ref="password" name="password" required autocomplete="off" />
 
                 <HelpText class="mt-2 text-red-500" v-if="form.errors.has('password')">
                     {{ form.errors.first('password') }}
@@ -27,7 +27,7 @@
                 </span>
             </LoadingButton>
 
-            <a  @click="logout()" class="my-2" href="#">Logout</a>
+            <a @click="logout()" class="my-2" href="#">Logout</a>
         </form>
     </div>
 </template>
@@ -48,20 +48,28 @@ export default {
         }
     },
 
-    created(){
+    created() {
         this.user = this.$page.props.currentUser
         this.$nextTick(() => this.$refs.password.focus())
     },
     methods: {
         unlock() {
+            var el = document.getElementsByTagName('form')[0]
+            el.classList.remove('shake')
+
+
             this.form.post('/nova/nova-lockscreen/auth')
-            .then(res => {
-                window.location.href = res.url
-            })
+                .then(res => {
+                    window.location.href = res.url
+                })
+                .catch(e => {
+                    el.classList.add('shake')
+                    this.form.reset()
+                })
         },
 
-        logout(){
-            if(confirm('Are you sure you want to logout ?')){
+        logout() {
+            if (confirm('Are you sure you want to logout ?')) {
                 this.$inertia.post('/nova/logout')
             }
         }
@@ -73,11 +81,12 @@ export default {
 </script>
 
 <style>
-.lock-form{
-        background-color: #0e0e0e33;
+.lock-form {
+    background-color: #0e0e0e33;
 
-    }
-    .radius-16{
-        border-radius: 16px;
-    }
+}
+
+.radius-16 {
+    border-radius: 16px;
+}
 </style>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
+use Visanduma\NovaLockscreen\Http\LockScreenController;
 use Visanduma\NovaLockscreen\Http\Middleware\Padlock;
 
 /*
@@ -17,50 +18,7 @@ use Visanduma\NovaLockscreen\Http\Middleware\Padlock;
 |
 */
 
-Route::get('lock',function(){
-    return inertia('NovaLockscreen');
-});
-
-
-Route::get('/', function () {
-
-    return inertia('NovaLockscreen');
-
-});
-
-
-Route::post('auth',function(NovaRequest $request){
-
-    $request->validate([
-        'password' => 'required|current_password'
-    ]);
-
-    session()->put('nova-lockscreen.last_activity', now());
-
-    session()->put('nova-lockscreen.locked', false);
-
-
-    return [
-        'url' => session()->get('url.intended','/nova')
-    ];
-
-});
-
-
-Route::get('check', function () {
-
-    $lastAct = session()->get('nova-lockscreen.last_activity', now());
-
-    if (now()->diffInSeconds($lastAct) > config('nova-lockscreen.lock-timeout')) {
-
-        session()->put('url.intended', request()->header('referer'));
-        session()->put('nova-lockscreen.locked', true);
-
-        return [
-        'url' => "/nova-lockscreen/lock"
-    ];
-
-    return response()->json([],422);
-
-    }
-});
+Route::get('lock',[LockScreenController::class,'lockNow'])->name('lock');
+Route::post('auth',[LockScreenController::class,'auth']);
+Route::get('check', [LockScreenController::class,'check']);
+Route::get('/', [LockScreenController::class,'index'])->name('form');

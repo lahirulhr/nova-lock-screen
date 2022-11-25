@@ -33,18 +33,24 @@ class NovaLockscreen extends Tool
 
     public static function excludedUrls()
     {
+
         return array_merge(config('nova-lockscreen.excluded_urls'), [
-                    'nova/nova-lockscreen',
-                    'nova/nova-lockscreen/lock',
-                    'nova/nova-lockscreen/auth',
-                    'nova/nova-lockscreen/check',
-                    'nova/logout',
-                    'nova/login',
+                    Nova::url('nova-lockscreen'),
+                    Nova::url('nova-lockscreen/lock'),
+                    Nova::url('nova-lockscreen/auth'),
+                    Nova::url('nova-lockscreen/check'),
+                    Nova::url('logout'),
+                    Nova::url('login'),
                 ]);
     }
 
     public static function setBackgroundImage($url)
     {
         Nova::provideToScript(['nls' => ['background_image' => $url]]);
+    }
+
+    public static function getBackgroundImage()
+    {
+        return auth()->check() ? auth()->user()->getLockScreenImage() : null;
     }
 }
