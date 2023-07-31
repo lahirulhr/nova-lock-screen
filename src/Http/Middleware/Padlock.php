@@ -16,17 +16,27 @@ class Padlock
      */
     public function handle($request, $next)
     {
-        if ( !config('nova-lockscreen.enabled') || in_array($request->path(), $this->excludedUrls())) {
-            return $next($request) ;
+        // return $next($request) ;
+        if (!config('nova-lockscreen.enabled')) {
+            return $next($request);
+        }
+
+        if (NovaLockscreen::enabled()) {
+            return $next($request);
+        }
+
+        if (in_array("/" . $request->path(), $this->excludedUrls())) {
+            return $next($request);
         }
 
         if (session()->get('nova-lockscreen.locked')) {
-            return inertia('NovaLockscreen');
+
+            return redirect(Nova::url('nova-lockscreen/lock'));
         }
 
         session()->put('nova-lockscreen.last_activity', now());
 
-        return $next($request) ;
+        return $next($request);
     }
 
     private function excludedUrls()

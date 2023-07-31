@@ -4,6 +4,8 @@ namespace Visanduma\NovaLockscreen\Http;
 
 use App\Http\Controllers\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Nova;
+use Visanduma\NovaLockscreen\NovaLockscreen;
 
 class LockScreenController extends Controller
 {
@@ -16,33 +18,46 @@ class LockScreenController extends Controller
         session()->put('nova-lockscreen.locked', false);
 
         return [
-            'url' => session()->get('url.intended', '/nova')
+            'url' => session()->get('url.intended', Nova::$initialPath)
         ];
     }
 
     public function check()
     {
-        $lastAct = session()->get('nova-lockscreen.last_activity', now());
+        $lastAct = session()->get('nova-lockscreen.last_activity');
 
-        if (now()->diffInMinutes($lastAct) > config('nova-lockscreen.lock-timeout')) {
+        if (!$lastAct) {
+            session()->put('nova-lockscreen.last_activity', now());
+            $lastAct = now();
+        }
+
+        if (now()->diffInMinutes($lastAct) > config('nova-lockscreen.lock_timeout')) {
+
             $this->executeLock();
 
             return [
-                'url' => "/nova-lockscreen/lock"
+                'locked' => NovaLockscreen::enabled(),
+                'url' => '/nova-lockscreen/lock'
             ];
         }
+
         return response()->json(['locked' => false]);
     }
 
     public function lockNow()
     {
-        $this->executeLock();
+
         return inertia('NovaLockscreen');
+
     }
 
     private function executeLock()
     {
-        session()->put('url.intended', request()->header('referer'));
+        $referer = request()->header('referer');
+        $path = parse_url($referer, PHP_URL_PATH) . parse_url($referer, PHP_URL_QUERY);
+        $path = str($path)->replace(config('nova.path'), '');
+
+        session()->put('url.intended', $path);
         session()->put('nova-lockscreen.locked', true);
     }
 

@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <Head :title="__('Lock Screen')" />
 
         <form @submit.prevent="unlock" class="p-8 max-w-[25rem] mx-auto text-center text-white lock-form radius-16">
@@ -60,7 +59,8 @@ export default {
 
             this.form.post('/nova/nova-lockscreen/auth')
                 .then(res => {
-                    window.location.href = res.url
+                    Nova.visit(res.url)
+                    // window.location.href = res.url
                 })
                 .catch(e => {
                     el.classList.add('shake')

@@ -9,6 +9,6 @@ namespace Visanduma\NovaLockscreen;
 
     public function lockScreenEnabled():bool
     {
-        return true;
+        return config('nova-lockscreen.enabled');
     }
  }

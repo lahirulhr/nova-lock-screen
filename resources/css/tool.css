@@ -26,10 +26,10 @@
 
 .bg-lock::before{
     content: "";
-        position: absolute;
-        width: 100%;
-        height: 100vh;
-        backdrop-filter: blur(8px);
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    backdrop-filter: blur(8px);
 }
 
 div.bg-lock {

@@ -27,22 +27,25 @@ class ToolServiceProvider extends ServiceProvider
 
 
         $this->publishes([
-                __DIR__ . '/../config/nova-locakscreen.php' => config_path('nova-locakscreen.php'),
-            ], 'nova-lockscreen.config');
+            __DIR__ . '/../config/nova-locakscreen.php' => config_path('nova-locakscreen.php'),
+        ], 'nova-lockscreen.config');
 
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-lockscreen');
 
         Nova::serving(function (ServingNova $event) {
             Nova::provideToScript([
                 'nls' => [
                     'enabled' => config('nova-lockscreen.enabled'),
+                    'polling_timeout' => config('nova-lockscreen.polling_timeout'),
                     'background_image' => NovaLockscreen::getBackgroundImage(),
-                    'excluded_urls' => NovaLockscreen::excludedUrls()
+                    'excluded_urls' => NovaLockscreen::excludedUrls(),
+                    'polling_url' => Nova::url('nova-lockscreen/check'),
                 ]
             ]);
         });
 
 
-        Nova::userMenu(function(Request $request,Menu $menu){
+        Nova::userMenu(function (Request $request, Menu $menu) {
             $menu->append(
                 MenuItem::make('Lock', route('nova-lockscreen.lock'))
             );
@@ -61,11 +64,11 @@ class ToolServiceProvider extends ServiceProvider
         }
 
         Nova::router(['nova', Authenticate::class, Authorize::class], 'nova-lockscreen')
-            ->group(__DIR__.'/../routes/inertia.php');
+            ->group(__DIR__ . '/../routes/inertia.php');
 
         Route::middleware(['nova', Authorize::class])
             ->prefix('nova-vendor/nova-lockscreen')
-            ->group(__DIR__.'/../routes/api.php');
+            ->group(__DIR__ . '/../routes/api.php');
     }
 
     /**
@@ -76,7 +79,6 @@ class ToolServiceProvider extends ServiceProvider
     public function register()
     {
 
-$this->mergeConfigFrom(__DIR__ . '/../config/nova-lockscreen.php', 'nova-lockscreen');
-
+        $this->mergeConfigFrom(__DIR__ . '/../config/nova-lockscreen.php', 'nova-lockscreen');
     }
 }

@@ -16,8 +16,8 @@ class NovaLockscreen extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-lockscreen', __DIR__.'/../dist/js/tool.js');
-        Nova::style('nova-lockscreen', __DIR__.'/../dist/css/tool.css');
+        Nova::script('nova-lockscreen', __DIR__ . '/../dist/js/tool.js');
+        Nova::style('nova-lockscreen', __DIR__ . '/../dist/css/tool.css');
     }
 
     /**
@@ -35,13 +35,13 @@ class NovaLockscreen extends Tool
     {
 
         return array_merge(config('nova-lockscreen.excluded_urls'), [
-                    Nova::url('nova-lockscreen'),
-                    Nova::url('nova-lockscreen/lock'),
-                    Nova::url('nova-lockscreen/auth'),
-                    Nova::url('nova-lockscreen/check'),
-                    Nova::url('logout'),
-                    Nova::url('login'),
-                ]);
+            Nova::url('nova-lockscreen'),
+            Nova::url('nova-lockscreen/lock'),
+            Nova::url('nova-lockscreen/auth'),
+            Nova::url('nova-lockscreen/check'),
+            Nova::url('logout'),
+            Nova::url('login'),
+        ]);
     }
 
     public static function setBackgroundImage($url)
@@ -52,5 +52,10 @@ class NovaLockscreen extends Tool
     public static function getBackgroundImage()
     {
         return auth()->check() ? auth()->user()->getLockScreenImage() : null;
+    }
+
+    public static function enabled(): bool
+    {
+        return auth()->check() && auth()->user()->lockScreenEnabled();
     }
 }
