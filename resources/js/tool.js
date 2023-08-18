@@ -1,7 +1,7 @@
 import Tool from "./pages/Tool";
 
 Nova.booting((app, store) => {
-    Nova.inertia("NovaLockscreen", Tool);
+    Nova.inertia("NovaLockScreen", Tool);
 });
 
 setInterval(function () {
@@ -14,7 +14,7 @@ setInterval(function () {
         Nova.request()
             .get(Nova.config('nls')['polling_url'])
             .then((res) => {
-                if(res.data.locked){
+                if (res.data.locked) {
                     Nova.visit(res.data.url)
                 }
             });

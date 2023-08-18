@@ -1,5 +1,5 @@
 {
-    "name": "visanduma/nova-lockscreen",
+    "name": "lahirulhr/nova-lock-screen",
     "description": "A Laravel Nova tool.",
     "keywords": [
         "laravel",
@@ -11,13 +11,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Visanduma\\NovaLockscreen\\": "src/"
+            "Lahirulhr\\NovaLockScreen\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Visanduma\\NovaLockscreen\\ToolServiceProvider"
+                "Lahirulhr\\NovaLockScreen\\ToolServiceProvider"
             ]
         }
     },

@@ -1,9 +1,9 @@
 <?php
 
-namespace Visanduma\NovaLockscreen\Http\Middleware;
+namespace Lahirulhr\NovaLockScreen\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use Visanduma\NovaLockscreen\NovaLockscreen;
+use Lahirulhr\NovaLockScreen\NovaLockScreen;
 
 class Authorize
 {
@@ -29,6 +29,6 @@ class Authorize
      */
     public function matchesTool($tool)
     {
-        return $tool instanceof NovaLockscreen;
+        return $tool instanceof NovaLockScreen;
     }
 }

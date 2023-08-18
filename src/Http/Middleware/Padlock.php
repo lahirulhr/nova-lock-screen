@@ -1,9 +1,9 @@
 <?php
 
-namespace Visanduma\NovaLockscreen\Http\Middleware;
+namespace Lahirulhr\NovaLockScreen\Http\Middleware;
 
 use Laravel\Nova\Nova;
-use Visanduma\NovaLockscreen\NovaLockscreen;
+use Lahirulhr\NovaLockScreen\NovaLockScreen;
 
 class Padlock
 {
@@ -17,11 +17,11 @@ class Padlock
     public function handle($request, $next)
     {
         // return $next($request) ;
-        if (!config('nova-lockscreen.enabled')) {
+        if (!config('nova-lock-screen.enabled')) {
             return $next($request);
         }
 
-        if (NovaLockscreen::enabled()) {
+        if (NovaLockScreen::enabled()) {
             return $next($request);
         }
 
@@ -29,18 +29,18 @@ class Padlock
             return $next($request);
         }
 
-        if (session()->get('nova-lockscreen.locked')) {
+        if (session()->get('nova-lock-screen.locked')) {
 
-            return redirect(Nova::url('nova-lockscreen/lock'));
+            return redirect(Nova::url('nova-lock-screen/lock'));
         }
 
-        session()->put('nova-lockscreen.last_activity', now());
+        session()->put('nova-lock-screen.last_activity', now());
 
         return $next($request);
     }
 
     private function excludedUrls()
     {
-        return NovaLockscreen::excludedUrls();
+        return NovaLockScreen::excludedUrls();
     }
 }

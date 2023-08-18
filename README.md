@@ -1,2 +1,3 @@
-# nova-lockscreen
- Screen lock feature for Laravel Nova
+# nova-lock-screen
+
+Screen lock feature for Laravel Nova

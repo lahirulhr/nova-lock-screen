@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
-use Visanduma\NovaLockscreen\Http\LockScreenController;
-use Visanduma\NovaLockscreen\Http\Middleware\Padlock;
+use Lahirulhr\NovaLockScreen\Http\LockScreenController;
+use Lahirulhr\NovaLockScreen\Http\Middleware\Padlock;
 
 /*
 |--------------------------------------------------------------------------

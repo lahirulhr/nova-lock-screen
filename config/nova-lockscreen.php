@@ -1,6 +1,6 @@
 <?php
 
-// config for Nova Lockscreen
+// config for Nova LockScreen
 
 return [
     'enabled' => true,

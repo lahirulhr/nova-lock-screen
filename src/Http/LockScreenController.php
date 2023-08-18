@@ -1,11 +1,11 @@
 <?php
 
-namespace Visanduma\NovaLockscreen\Http;
+namespace Lahirulhr\NovaLockScreen\Http;
 
 use App\Http\Controllers\Controller;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Nova;
-use Visanduma\NovaLockscreen\NovaLockscreen;
+use Lahirulhr\NovaLockScreen\NovaLockScreen;
 
 class LockScreenController extends Controller
 {
@@ -14,8 +14,8 @@ class LockScreenController extends Controller
         $request->validate([
             'password' => 'required|current_password'
         ]);
-        session()->put('nova-lockscreen.last_activity', now());
-        session()->put('nova-lockscreen.locked', false);
+        session()->put('nova-lock-screen.last_activity', now());
+        session()->put('nova-lock-screen.locked', false);
 
         return [
             'url' => session()->get('url.intended', Nova::$initialPath)
@@ -24,20 +24,20 @@ class LockScreenController extends Controller
 
     public function check()
     {
-        $lastAct = session()->get('nova-lockscreen.last_activity');
+        $lastAct = session()->get('nova-lock-screen.last_activity');
 
         if (!$lastAct) {
-            session()->put('nova-lockscreen.last_activity', now());
+            session()->put('nova-lock-screen.last_activity', now());
             $lastAct = now();
         }
 
-        if (now()->diffInMinutes($lastAct) > config('nova-lockscreen.lock_timeout')) {
+        if (now()->diffInMinutes($lastAct) > config('nova-lock-screen.lock_timeout')) {
 
             $this->executeLock();
 
             return [
-                'locked' => NovaLockscreen::enabled(),
-                'url' => '/nova-lockscreen/lock'
+                'locked' => NovaLockScreen::enabled(),
+                'url' => '/nova-lock-screen/lock'
             ];
         }
 
@@ -47,7 +47,7 @@ class LockScreenController extends Controller
     public function lockNow()
     {
 
-        return inertia('NovaLockscreen');
+        return inertia('NovaLockScreen');
 
     }
 
@@ -58,11 +58,11 @@ class LockScreenController extends Controller
         $path = str($path)->replace(config('nova.path'), '');
 
         session()->put('url.intended', $path);
-        session()->put('nova-lockscreen.locked', true);
+        session()->put('nova-lock-screen.locked', true);
     }
 
     public function index()
     {
-        return inertia('NovaLockscreen');
+        return inertia('NovaLockScreen');
     }
 }

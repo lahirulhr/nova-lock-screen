@@ -1,14 +1,14 @@
 <?php
-namespace Visanduma\NovaLockscreen;
+namespace Lahirulhr\NovaLockScreen;
 
  trait LockAble{
     public function getLockScreenImage():String
     {
-        return config('nova-lockscreen.background_image');
+        return config('nova-lock-screen.background_image');
     }
 
     public function lockScreenEnabled():bool
     {
-        return config('nova-lockscreen.enabled');
+        return config('nova-lock-screen.enabled');
     }
  }

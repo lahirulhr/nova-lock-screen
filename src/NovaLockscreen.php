@@ -1,13 +1,13 @@
 <?php
 
-namespace Visanduma\NovaLockscreen;
+namespace Lahirulhr\NovaLockScreen;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
-class NovaLockscreen extends Tool
+class NovaLockScreen extends Tool
 {
     /**
      * Perform any tasks that need to happen when the tool is booted.
@@ -16,8 +16,8 @@ class NovaLockscreen extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-lockscreen', __DIR__ . '/../dist/js/tool.js');
-        Nova::style('nova-lockscreen', __DIR__ . '/../dist/css/tool.css');
+        Nova::script('nova-lock-screen', __DIR__ . '/../dist/js/tool.js');
+        Nova::style('nova-lock-screen', __DIR__ . '/../dist/css/tool.css');
     }
 
     /**
@@ -34,11 +34,11 @@ class NovaLockscreen extends Tool
     public static function excludedUrls()
     {
 
-        return array_merge(config('nova-lockscreen.excluded_urls'), [
-            Nova::url('nova-lockscreen'),
-            Nova::url('nova-lockscreen/lock'),
-            Nova::url('nova-lockscreen/auth'),
-            Nova::url('nova-lockscreen/check'),
+        return array_merge(config('nova-lock-screen.excluded_urls'), [
+            Nova::url('nova-lock-screen'),
+            Nova::url('nova-lock-screen/lock'),
+            Nova::url('nova-lock-screen/auth'),
+            Nova::url('nova-lock-screen/check'),
             Nova::url('logout'),
             Nova::url('login'),
         ]);
