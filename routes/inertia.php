@@ -1,11 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Nova;
 use Lahirulhr\NovaLockScreen\Http\LockScreenController;
-use Lahirulhr\NovaLockScreen\Http\Middleware\Padlock;
+use Lahirulhr\NovaLockScreen\Http\Middleware\LockScreen;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +15,8 @@ use Lahirulhr\NovaLockScreen\Http\Middleware\Padlock;
 |
 */
 
-Route::get('lock',[LockScreenController::class,'lockNow'])->name('lock');
-Route::post('auth',[LockScreenController::class,'auth']);
-Route::get('check', [LockScreenController::class,'check']);
-Route::get('/', [LockScreenController::class,'index'])->name('form');
+Route::get('lock', [LockScreenController::class,'lock']);
+
+Route::match(['get','post'],'/', [LockScreenController::class,'index'])
+    ->withoutMiddleware(LockScreen::class)
+    ->name('form');

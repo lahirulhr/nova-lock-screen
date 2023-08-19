@@ -1,7 +1,7 @@
 <?php
 namespace Lahirulhr\NovaLockScreen;
 
- trait LockAble{
+ trait LockScreen{
     public function getLockScreenImage():String
     {
         return config('nova-lock-screen.background_image');

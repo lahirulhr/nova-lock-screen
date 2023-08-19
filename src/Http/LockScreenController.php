@@ -2,53 +2,21 @@
 
 namespace Lahirulhr\NovaLockScreen\Http;
 
-use App\Http\Controllers\Controller;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Nova;
 use Lahirulhr\NovaLockScreen\NovaLockScreen;
+use Laravel\Nova\Nova;
 
-class LockScreenController extends Controller
+class LockScreenController
 {
-    public function auth(NovaRequest $request)
+
+    public function lock()
     {
-        $request->validate([
-            'password' => 'required|current_password'
-        ]);
-        session()->put('nova-lock-screen.last_activity', now());
-        session()->put('nova-lock-screen.locked', false);
+        $this->executeLock();
 
         return [
-            'url' => session()->get('url.intended', Nova::$initialPath)
+            'locked' => NovaLockScreen::enabled(),
+            'url' => Nova::url('/nova-lock-screen')
         ];
-    }
-
-    public function check()
-    {
-        $lastAct = session()->get('nova-lock-screen.last_activity');
-
-        if (!$lastAct) {
-            session()->put('nova-lock-screen.last_activity', now());
-            $lastAct = now();
-        }
-
-        if (now()->diffInMinutes($lastAct) > config('nova-lock-screen.lock_timeout')) {
-
-            $this->executeLock();
-
-            return [
-                'locked' => NovaLockScreen::enabled(),
-                'url' => '/nova-lock-screen/lock'
-            ];
-        }
-
-        return response()->json(['locked' => false]);
-    }
-
-    public function lockNow()
-    {
-
-        return inertia('NovaLockScreen');
-
+        
     }
 
     private function executeLock()
@@ -57,12 +25,30 @@ class LockScreenController extends Controller
         $path = parse_url($referer, PHP_URL_PATH) . parse_url($referer, PHP_URL_QUERY);
         $path = str($path)->replace(config('nova.path'), '');
 
-        session()->put('url.intended', $path);
+        session()->put('url.intended', Nova::url($path));
         session()->put('nova-lock-screen.locked', true);
+        session()->put('nova-lock-screen.last_activity', now());
+
     }
 
     public function index()
     {
-        return inertia('NovaLockScreen');
+
+        if(request()->isMethod('get')){
+            return view('nova-lock-screen::lock',[
+                    'bg' => NovaLockScreen::getBackgroundImage(),
+                    'username' => ucfirst(Nova::user()->name),
+                    'logout' => Nova::url('logout')
+                ]);
+        }
+
+        request()->validate([
+            'password' => 'required|current_password'
+        ]);
+        session()->put('nova-lock-screen.last_activity', now());
+        session()->put('nova-lock-screen.locked', false);
+
+        return redirect(session()->get('url.intended', Nova::$initialPath));
+        
     }
 }

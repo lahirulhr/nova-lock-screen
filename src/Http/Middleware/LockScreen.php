@@ -5,7 +5,7 @@ namespace Lahirulhr\NovaLockScreen\Http\Middleware;
 use Laravel\Nova\Nova;
 use Lahirulhr\NovaLockScreen\NovaLockScreen;
 
-class Padlock
+class LockScreen
 {
     /**
      * Handle the incoming request.
@@ -16,25 +16,13 @@ class Padlock
      */
     public function handle($request, $next)
     {
-        // return $next($request) ;
-        if (!config('nova-lock-screen.enabled')) {
+         if (in_array("/" . $request->path(), $this->excludedUrls())) {
             return $next($request);
         }
-
-        if (NovaLockScreen::enabled()) {
-            return $next($request);
+        
+        if (NovaLockScreen::locked()) { 
+            return redirect()->to(Nova::url('nova-lock-screen'));
         }
-
-        if (in_array("/" . $request->path(), $this->excludedUrls())) {
-            return $next($request);
-        }
-
-        if (session()->get('nova-lock-screen.locked')) {
-
-            return redirect(Nova::url('nova-lock-screen/lock'));
-        }
-
-        session()->put('nova-lock-screen.last_activity', now());
 
         return $next($request);
     }

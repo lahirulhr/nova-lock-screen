@@ -1,6 +1,6 @@
 {
     "name": "lahirulhr/nova-lock-screen",
-    "description": "A Laravel Nova tool.",
+    "description": "A simple lock screen for laravel nova.",
     "keywords": [
         "laravel",
         "nova"

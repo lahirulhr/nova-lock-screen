@@ -27,29 +27,22 @@ class ToolServiceProvider extends ServiceProvider
 
 
         $this->publishes([
-            __DIR__ . '/../config/nova-locakscreen.php' => config_path('nova-locakscreen.php'),
-        ], 'nova-lock-screen.config');
+            __DIR__ . '/../config/nova-lock-screen.php' => config_path('nova-lock-screen.php'),
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/nova-lock-screen'),
+        ], 'nova-lock-screen');
+
 
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'nova-lock-screen');
 
         Nova::serving(function (ServingNova $event) {
             Nova::provideToScript([
                 'nls' => [
-                    'enabled' => config('nova-lock-screen.enabled'),
-                    'polling_timeout' => config('nova-lock-screen.polling_timeout'),
-                    'background_image' => NovaLockScreen::getBackgroundImage(),
-                    'excluded_urls' => NovaLockScreen::excludedUrls(),
-                    'polling_url' => Nova::url('nova-lock-screen/check'),
+                    'lock_timeout' => config('nova-lock-screen.lock_timeout') * 1000,
+                    'lock_url' => Nova::url('nova-lock-screen/lock')
                 ]
             ]);
         });
 
-
-        Nova::userMenu(function (Request $request, Menu $menu) {
-            $menu->append(
-                MenuItem::make('Lock', route('nova-lock-screen.lock'))
-            );
-        });
     }
 
     /**

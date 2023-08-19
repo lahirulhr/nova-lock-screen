@@ -2,8 +2,8 @@
 
 namespace Lahirulhr\NovaLockScreen;
 
+use Exception;
 use Illuminate\Http\Request;
-use Laravel\Nova\Menu\MenuSection;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
 
@@ -17,7 +17,6 @@ class NovaLockScreen extends Tool
     public function boot()
     {
         Nova::script('nova-lock-screen', __DIR__ . '/../dist/js/tool.js');
-        Nova::style('nova-lock-screen', __DIR__ . '/../dist/css/tool.css');
     }
 
     /**
@@ -51,11 +50,41 @@ class NovaLockScreen extends Tool
 
     public static function getBackgroundImage()
     {
-        return auth()->check() ? auth()->user()->getLockScreenImage() : null;
+        if(!self::user()){
+            return null;
+        }
+        
+        if(!method_exists(self::user(),'getLockScreenImage')){
+            throw new Exception('LockScreen trait must be use in user model !');
+        }
+        return self::user()->getLockScreenImage();
     }
 
     public static function enabled(): bool
     {
-        return auth()->check() && auth()->user()->lockScreenEnabled();
+
+        if(!config('nova-lock-screen.enabled')){
+            return false;
+        }
+
+        if(!method_exists(self::user(),'lockScreenEnabled')){
+            throw new Exception('LockScreen trait must be use in user model !');
+        }
+        return auth(self::guard())->check() && self::user()->lockScreenEnabled();
+    }
+
+    public static function locked():bool
+    {
+        return session()->get('nova-lock-screen.locked',false);
+    }
+
+    public static function guard()
+    {
+        return config('nova-lock-screen.guard');
+    }
+
+    public static function user()
+    {
+        return auth(self::guard())->user();
     }
 }

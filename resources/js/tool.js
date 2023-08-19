@@ -1,22 +1,23 @@
-import Tool from "./pages/Tool";
+let inactivityTime = function () {
+    let time;
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.keydown = resetTimer;
 
-Nova.booting((app, store) => {
-    Nova.inertia("NovaLockScreen", Tool);
-});
-
-setInterval(function () {
-    if (
-        Nova.config("nls")["enabled"] &&
-        !Nova.config("nls")["excluded_urls"].includes(
-            "/" + window.location.pathname.slice(1)
-        )
-    ) {
+    function lock() {
         Nova.request()
-            .get(Nova.config('nls')['polling_url'])
+            .get(Nova.config('nls')['lock_url'])
             .then((res) => {
                 if (res.data.locked) {
-                    Nova.visit(res.data.url)
+                    window.location.href = res.data.url
                 }
             });
     }
-}, Nova.config("nls")["polling_timeout"]);
+    function resetTimer() {
+        clearTimeout(time);
+        time = setTimeout(lock, Nova.config("nls")["lock_timeout"])
+    }
+};
+window.onload = function () {
+    inactivityTime();
+}
