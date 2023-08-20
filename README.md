@@ -13,7 +13,7 @@ Lock screen is simple security feature that work as locking overlay over the you
 
 <p align="center">
 
-<img src="https://github.com/lahirulhr/nova-lockscreen/blob/9f41714e941f918639e15e3c867650ed63f88bbb/sample.png" />
+<img src="https://github.com/lahirulhr/nova-lock-screen/blob/3c84ee30a83159fca5271fd93c20174ed7b7b072/sample.png" />
 
 </p>
 
