@@ -103,3 +103,20 @@ public function getLockScreenImage():String
     return 'url\to\image.jpg';
 }
 ```
+
+### Enable/Disable lock screen per user
+
+use ``` lockScreenEnabled() ``` method to overide default lock status settings
+
+```php
+public function lockScreenEnabled():bool
+{
+    return false;
+}
+
+```
+
+### Customizing the lock screen
+
+lock screen page is built with blade views. you can copy them into your resource directory by run `` php artisan vendor:publish --tag="nova-lock-screen" `` command
+then customize them as your needs.
