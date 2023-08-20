@@ -2,8 +2,8 @@
 
 namespace Lahirulhr\NovaLockScreen\Http\Middleware;
 
-use Laravel\Nova\Nova;
 use Lahirulhr\NovaLockScreen\NovaLockScreen;
+use Laravel\Nova\Nova;
 
 class LockScreen
 {
@@ -16,11 +16,12 @@ class LockScreen
      */
     public function handle($request, $next)
     {
-         if (in_array("/" . $request->path(), $this->excludedUrls())) {
+        if (in_array('/'.$request->path(), $this->excludedUrls())) {
+
             return $next($request);
         }
-        
-        if (NovaLockScreen::locked()) { 
+
+        if (NovaLockScreen::locked()) {
             return redirect()->to(Nova::url('nova-lock-screen'));
         }
 

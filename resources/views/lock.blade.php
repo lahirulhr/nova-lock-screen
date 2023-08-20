@@ -15,7 +15,7 @@
                 <input autofocus
                     class="form-control form-input w-full text-center opacity-75 text-black border-none h-12 radius-16 bg-gray-300"
                     id="password" type="password" ref="password" name="password" required />
-                <small class="mt-2 text-red-300">{{ $errors->first() }}</small>
+                <small class="mt-2 text-red-500">{{ $errors->first() }}</small>
             </div>
 
             <button class="w-full flex justify-center radius-16 py-3 bg-black mb-3" type="submit">
