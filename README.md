@@ -120,3 +120,12 @@ public function lockScreenEnabled():bool
 
 lock screen page is built with blade views. you can copy them into your resource directory by run `` php artisan vendor:publish --tag="nova-lock-screen" `` command
 then customize them as your needs.
+
+
+## Credits
+
+- [Lahiru Tharaka](https://github.com/lahirulhr)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
