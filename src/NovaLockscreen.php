@@ -16,13 +16,12 @@ class NovaLockScreen extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-lock-screen', __DIR__ . '/../dist/js/tool.js');
+        Nova::script('nova-lock-screen', __DIR__.'/../dist/js/tool.js');
     }
 
     /**
      * Build the menu that renders the navigation links for the tool.
      *
-     * @param  \Illuminate\Http\Request $request
      * @return mixed
      */
     public function menu(Request $request)
@@ -50,32 +49,43 @@ class NovaLockScreen extends Tool
 
     public static function getBackgroundImage()
     {
-        if(!self::user()){
+        if (! self::user()) {
             return null;
         }
-        
-        if(!method_exists(self::user(),'getLockScreenImage')){
+
+        if (! method_exists(self::user(), 'getLockScreenImage')) {
             throw new Exception('LockScreen trait must be use in user model !');
         }
+
         return self::user()->getLockScreenImage();
+    }
+
+    public static function timeout()
+    {
+        if (! self::user()) {
+            return null;
+        }
+
+        return self::user()->getLockScreenTimeout();
     }
 
     public static function enabled(): bool
     {
 
-        if(!config('nova-lock-screen.enabled')){
+        if (! config('nova-lock-screen.enabled')) {
             return false;
         }
 
-        if(!method_exists(self::user(),'lockScreenEnabled')){
+        if (! method_exists(self::user(), 'lockScreenEnabled')) {
             throw new Exception('LockScreen trait must be use in user model !');
         }
+
         return auth(self::guard())->check() && self::user()->lockScreenEnabled();
     }
 
-    public static function locked():bool
+    public static function locked(): bool
     {
-        return session()->get('nova-lock-screen.locked',false);
+        return session()->get('nova-lock-screen.locked', false);
     }
 
     public static function guard()
