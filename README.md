@@ -6,12 +6,14 @@
 
 </p>
 
+Lock screen is simple security feature that work as locking overlay over the your nova dashboard. if user is idle for given timeout, the lockscreen will be activated automatically. then user need to enter login password again to continue their session.
+
 
 ### How to use
 
 1. Run composer ``` composer require lahirulhr/nova-lock-screen ``` to install the package
 
-2. Publish config & views `` php artisan vendor:publish --tag="nova-lock-screen" ``
+2. Publish config (Optional) `` php artisan vendor:publish --tag="nova-lock-screen.config" ``
 
 3. Use ``LockScreen`` trait in User model
 
@@ -116,9 +118,22 @@ public function lockScreenEnabled():bool
 
 ```
 
+### Set locking timeout per user
+
+use ``` lockScreenTimeout() ``` method to overide default lock status settings
+
+```php
+public function lockScreenTimeout():int
+{
+    return 60*10; // seconds
+}
+
+```
+
+
 ### Customizing the lock screen
 
-lock screen page is built with blade views. you can copy them into your resource directory by run `` php artisan vendor:publish --tag="nova-lock-screen" `` command
+lock screen page is built with blade views. you can copy them into your resource directory by run `` php artisan vendor:publish --tag="nova-lock-screen.views" `` command
 then customize them as your needs.
 
 
