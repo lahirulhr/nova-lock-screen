@@ -9,6 +9,17 @@
 Lock screen is simple security feature that work as locking overlay over the your nova dashboard. if user is idle for given timeout, the lockscreen will be activated automatically. then user need to enter login password again to continue their session.
 
 
+### View
+
+<p align="center">
+
+<img src="https://github.com/lahirulhr/nova-lockscreen/blob/9f41714e941f918639e15e3c867650ed63f88bbb/sample.png" />
+
+</p>
+
+
+
+
 ### How to use
 
 1. Run composer ``` composer require lahirulhr/nova-lock-screen ``` to install the package
