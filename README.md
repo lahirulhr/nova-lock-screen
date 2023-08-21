@@ -144,8 +144,8 @@ public function lockScreenTimeout():int
 
 ### Customizing the lock screen
 
-lock screen page is built with blade views. you can copy them into your resource directory by run `` php artisan vendor:publish --tag="nova-lock-screen.views" `` command
-then customize them as your needs.
+lock screen page is built with blade views. you can copy them into your resource directory by running `` php artisan vendor:publish --tag="nova-lock-screen.views" `` command
+then customize them as you want.
 
 
 ## Credits
