@@ -23,7 +23,7 @@ class LockScreenController
     {
         $referer = request()->header('referer');
         $path = parse_url($referer, PHP_URL_PATH) . parse_url($referer, PHP_URL_QUERY);
-        $path = str($path)->replace(config('nova.path'), '');
+        $path = str($path)->replaceFirst(config('nova.path'), '');
 
         session()->put('url.intended', Nova::url($path));
         session()->put('nova-lock-screen.locked', true);
