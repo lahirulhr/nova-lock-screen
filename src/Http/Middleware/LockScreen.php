@@ -22,7 +22,7 @@ class LockScreen
         }
 
         if (NovaLockScreen::locked()) {
-            return redirect()->to(Nova::url('nova-lock-screen'));
+            return redirect()->to(NovaLockScreen::url());
         }
 
         return $next($request);

@@ -36,7 +36,7 @@ class ToolServiceProvider extends ServiceProvider
             Nova::provideToScript([
                 'nls' => [
                     'lock_timeout' => NovaLockScreen::timeout() * 1000,
-                    'lock_url' => Nova::url('nova-lock-screen/lock'),
+                    'lock_url' => NovaLockScreen::url('lock'),
                 ],
             ]);
         });
@@ -54,7 +54,7 @@ class ToolServiceProvider extends ServiceProvider
             return;
         }
 
-        Nova::router(['nova', Authenticate::class, Authorize::class], 'nova-lock-screen')
+        Nova::router(['nova', Authenticate::class, Authorize::class], NovaLockScreen::url(pathOnly: true))
             ->group(__DIR__.'/../routes/inertia.php');
 
         Route::middleware(['nova', Authorize::class])

@@ -13,7 +13,7 @@ class LockScreenController
 
         return [
             'locked' => NovaLockScreen::enabled(),
-            'url' => Nova::url('/nova-lock-screen'),
+            'url' => NovaLockScreen::url(),
         ];
 
     }

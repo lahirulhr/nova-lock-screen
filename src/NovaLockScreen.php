@@ -33,10 +33,9 @@ class NovaLockScreen extends Tool
     {
 
         return array_merge(config('nova-lock-screen.excluded_urls'), [
-            Nova::url('nova-lock-screen'),
-            Nova::url('nova-lock-screen/lock'),
-            Nova::url('nova-lock-screen/auth'),
-            Nova::url('nova-lock-screen/check'),
+            self::url(),
+            self::url('lock'),
+            self::url('auth'),
             Nova::url('logout'),
             Nova::url('login'),
         ]);
@@ -96,5 +95,15 @@ class NovaLockScreen extends Tool
     public static function user()
     {
         return auth(self::guard())->user();
+    }
+
+    public static function url($path = '', $pathOnly = false)
+    {
+        $path = str(config('nova-lock-screen.lock_url', 'nova-lock-screen'))
+            ->finish('/')
+            ->append($path)
+            ->toString();
+
+        return $pathOnly  ? $path : Nova::url($path);
     }
 }
