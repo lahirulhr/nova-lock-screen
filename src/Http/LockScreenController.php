@@ -7,22 +7,21 @@ use Laravel\Nova\Nova;
 
 class LockScreenController
 {
-
     public function lock()
     {
         $this->executeLock();
 
         return [
             'locked' => NovaLockScreen::enabled(),
-            'url' => Nova::url('/nova-lock-screen')
+            'url' => Nova::url('/nova-lock-screen'),
         ];
-        
+
     }
 
     private function executeLock()
     {
         $referer = request()->header('referer');
-        $path = parse_url($referer, PHP_URL_PATH) . parse_url($referer, PHP_URL_QUERY);
+        $path = parse_url($referer, PHP_URL_PATH).parse_url($referer, PHP_URL_QUERY);
         $path = str($path)->replaceFirst(config('nova.path'), '');
 
         session()->put('url.intended', Nova::url($path));
@@ -34,21 +33,21 @@ class LockScreenController
     public function index()
     {
 
-        if(request()->isMethod('get')){
-            return view('nova-lock-screen::lock',[
-                    'bg' => NovaLockScreen::getBackgroundImage(),
-                    'username' => ucfirst(Nova::user()->name),
-                    'logout' => Nova::url('logout')
-                ]);
+        if (request()->isMethod('get')) {
+            return view('nova-lock-screen::lock', [
+                'bg' => NovaLockScreen::getBackgroundImage(),
+                'username' => ucfirst(Nova::user()->name),
+                'logout' => Nova::url('logout'),
+            ]);
         }
 
         request()->validate([
-            'password' => 'required|current_password'
+            'password' => 'required|current_password',
         ]);
         session()->put('nova-lock-screen.last_activity', now());
         session()->put('nova-lock-screen.locked', false);
 
         return redirect(session()->get('url.intended', Nova::$initialPath));
-        
+
     }
 }

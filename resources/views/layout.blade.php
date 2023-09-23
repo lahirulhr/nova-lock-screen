@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="ZJpba94MMK4uNSbaQr8swRC3BkLF3bjbsEL7H6Sn">
     <meta name="viewport" content="width=device-width" />
     <meta name="locale" content="en" />
+    <meta http-equiv="refresh" content="{{ config('session.lifetime') * 60 }}">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
     <style>
         .lock-form {
