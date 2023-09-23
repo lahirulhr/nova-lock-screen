@@ -99,9 +99,12 @@ return [
     // these urls does not locked by lock screen
     'excluded_urls' => [
         //
-    ]
+    ],
 
-];
+    // set custom url for lock screen
+        'lock_url' => 'nova-lock-screen',
+    
+    ];
 
 ```
 
