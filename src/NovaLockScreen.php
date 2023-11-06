@@ -14,24 +14,24 @@ class NovaLockScreen extends Tool
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        Nova::script('nova-lock-screen', __DIR__.'/../dist/js/tool.js');
+        Nova::script('nova-lock-screen', __DIR__ . '/../dist/js/tool.js');
     }
 
     /**
      * Build the menu that renders the navigation links for the tool.
      *
+     * @param Request $request
      * @return mixed
      */
-    public function menu(Request $request)
+    public function menu(Request $request): mixed
     {
         return null;
     }
 
-    public static function excludedUrls()
+    public static function excludedUrls(): array
     {
-
         return array_merge(config('nova-lock-screen.excluded_urls'), [
             self::url(),
             self::url('lock'),
@@ -41,18 +41,21 @@ class NovaLockScreen extends Tool
         ]);
     }
 
-    public static function setBackgroundImage($url)
+    public static function setBackgroundImage($url): void
     {
         Nova::provideToScript(['nls' => ['background_image' => $url]]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function getBackgroundImage()
     {
-        if (! self::user()) {
+        if (!self::user()) {
             return null;
         }
 
-        if (! method_exists(self::user(), 'getLockScreenImage')) {
+        if (!method_exists(self::user(), 'getLockScreenImage')) {
             throw new Exception('LockScreen trait must be use in user model !');
         }
 
@@ -61,21 +64,23 @@ class NovaLockScreen extends Tool
 
     public static function timeout()
     {
-        if (! self::user()) {
+        if (!self::user()) {
             return null;
         }
 
         return self::user()->getLockScreenTimeout();
     }
 
+    /**
+     * @throws Exception
+     */
     public static function enabled(): bool
     {
-
-        if (! config('nova-lock-screen.enabled')) {
+        if (!config('nova-lock-screen.enabled')) {
             return false;
         }
 
-        if (! method_exists(self::user(), 'lockScreenEnabled')) {
+        if (!method_exists(self::user(), 'lockScreenEnabled')) {
             throw new Exception('LockScreen trait must be use in user model !');
         }
 
@@ -104,6 +109,6 @@ class NovaLockScreen extends Tool
             ->append($path)
             ->toString();
 
-        return $pathOnly  ? $path : Nova::url($path);
+        return $pathOnly ? $path : Nova::url($path);
     }
 }

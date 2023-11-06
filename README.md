@@ -6,8 +6,7 @@
 
 </p>
 
-Lock screen is simple security feature that work as locking overlay over the your nova dashboard. if user is idle for given timeout, the lockscreen will be activated automatically. then user need to enter login password again to continue their session.
-
+The lock screen is a simple security feature that works as locking overlay over the NOVA dashboard. If the user is idle for given timeout, the lockscreen will be activated automatically. Then the user needs to enter login password again to continue their session.
 
 ### View
 
@@ -44,7 +43,7 @@ class User extends Model {
 
 ```
 
-4. Register Tool in Nova service provider
+4. Register the Tool in Nova service provider
 
 
 ``` php
@@ -96,7 +95,7 @@ return [
     // default background image for lock screen
     'background_image' => 'https://magnificentsrilanka.com/wp-content/uploads/2022/01/sigiriya-from-pidurangala-1.jpg',
 
-    // these urls does not locked by lock screen
+    // these urls are not locked by lock screen
     'excluded_urls' => [
         //
     ],
@@ -111,7 +110,7 @@ return [
 
 ### Set custom background image per user
 
-you can overide default background image by overiding `` getLockScreenImage()`` method in User model
+you can override default background image by overriding `` getLockScreenImage()`` method in User model
 
 ``` php
 public function getLockScreenImage():String
@@ -122,7 +121,7 @@ public function getLockScreenImage():String
 
 ### Enable/Disable lock screen per user
 
-use ``` lockScreenEnabled() ``` method to overide default lock status settings
+use ``` lockScreenEnabled() ``` method to override default lock status settings
 
 ```php
 public function lockScreenEnabled():bool
@@ -134,7 +133,7 @@ public function lockScreenEnabled():bool
 
 ### Set locking timeout per user
 
-use ``` lockScreenTimeout() ``` method to overide default lock status settings
+use ``` lockScreenTimeout() ``` method to override default lock status settings
 
 ```php
 public function lockScreenTimeout():int
@@ -147,7 +146,7 @@ public function lockScreenTimeout():int
 
 ### Customizing the lock screen
 
-lock screen page is built with blade views. you can copy them into your resource directory by running `` php artisan vendor:publish --tag="nova-lock-screen.views" `` command
+The lock screen page is built with Blade views. You can copy them into your resource directory by running `` php artisan vendor:publish --tag="nova-lock-screen.views" `` command
 then customize them as you want.
 
 

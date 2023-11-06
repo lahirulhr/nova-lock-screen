@@ -2,12 +2,16 @@
 
 namespace Lahirulhr\NovaLockScreen\Http;
 
+use Exception;
 use Lahirulhr\NovaLockScreen\NovaLockScreen;
 use Laravel\Nova\Nova;
 
 class LockScreenController
 {
-    public function lock()
+    /**
+     * @throws Exception
+     */
+    public function lock(): array
     {
         $this->executeLock();
 
@@ -18,10 +22,10 @@ class LockScreenController
 
     }
 
-    private function executeLock()
+    private function executeLock(): void
     {
         $referer = request()->header('referer');
-        $path = parse_url($referer, PHP_URL_PATH).parse_url($referer, PHP_URL_QUERY);
+        $path = parse_url($referer, PHP_URL_PATH) . parse_url($referer, PHP_URL_QUERY);
         $path = str($path)->replaceFirst(config('nova.path'), '');
 
         session()->put('url.intended', Nova::url($path));
@@ -30,6 +34,9 @@ class LockScreenController
 
     }
 
+    /**
+     * @throws Exception
+     */
     public function index()
     {
 
