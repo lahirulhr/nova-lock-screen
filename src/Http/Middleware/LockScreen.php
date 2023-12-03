@@ -17,7 +17,7 @@ class LockScreen
      * @param Closure(Request):mixed $next
      * @return Response
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
         if (in_array('/' . $request->path(), $this->excludedUrls())) {
 
