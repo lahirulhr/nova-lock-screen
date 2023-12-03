@@ -1,29 +1,29 @@
 {
-    "name": "lahirulhr/nova-lock-screen",
-    "description": "A simple lock screen for laravel nova.",
-    "keywords": [
-        "laravel",
-        "nova"
-    ],
-    "license": "MIT",
-    "require": {
-        "php": "^7.3|^8.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Lahirulhr\\NovaLockScreen\\": "src/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Lahirulhr\\NovaLockScreen\\ToolServiceProvider"
-            ]
-        }
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "lahirulhr/nova-lock-screen",
+  "description": "A simple lock screen for laravel nova.",
+  "keywords": [
+    "laravel",
+    "nova"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lahirulhr\\NovaLockScreen\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Lahirulhr\\NovaLockScreen\\ToolServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

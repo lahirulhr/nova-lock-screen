@@ -2,6 +2,9 @@
 
 namespace Lahirulhr\NovaLockScreen\Http\Middleware;
 
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Lahirulhr\NovaLockScreen\NovaLockScreen;
 use Laravel\Nova\Nova;
 
@@ -10,13 +13,13 @@ class LockScreen
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request):mixed  $next
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Closure(Request):mixed $next
+     * @return Response
      */
-    public function handle($request, $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        if (in_array('/'.$request->path(), $this->excludedUrls())) {
+        if (in_array('/' . $request->path(), $this->excludedUrls())) {
 
             return $next($request);
         }
@@ -28,7 +31,7 @@ class LockScreen
         return $next($request);
     }
 
-    private function excludedUrls()
+    private function excludedUrls(): array
     {
         return NovaLockScreen::excludedUrls();
     }

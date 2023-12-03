@@ -2,19 +2,23 @@
 
 namespace Lahirulhr\NovaLockScreen\Http\Middleware;
 
-use Laravel\Nova\Nova;
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Lahirulhr\NovaLockScreen\NovaLockScreen;
+use Laravel\Nova\Nova;
+use Laravel\Nova\Tool;
 
 class Authorize
 {
     /**
      * Handle the incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request):mixed  $next
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Closure(Request):mixed $next
+     * @return Response
      */
-    public function handle($request, $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $tool = collect(Nova::registeredTools())->first([$this, 'matchesTool']);
 
@@ -24,10 +28,10 @@ class Authorize
     /**
      * Determine whether this tool belongs to the package.
      *
-     * @param  \Laravel\Nova\Tool  $tool
+     * @param Tool $tool
      * @return bool
      */
-    public function matchesTool($tool)
+    public function matchesTool(Tool $tool): bool
     {
         return $tool instanceof NovaLockScreen;
     }

@@ -15,8 +15,8 @@ use Lahirulhr\NovaLockScreen\Http\Middleware\LockScreen;
 |
 */
 
-Route::get('lock', [LockScreenController::class,'lock']);
+Route::get('lock', [LockScreenController::class, 'lock']);
 
-Route::match(['get','post'],'/', [LockScreenController::class,'index'])
+Route::match(['get', 'post'], '/', [LockScreenController::class, 'index'])
     ->withoutMiddleware(LockScreen::class)
     ->name('form');
