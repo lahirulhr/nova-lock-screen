@@ -6,6 +6,8 @@
 
 </p>
 
+[![Latest Stable Version](http://poser.pugx.org/lahirulhr/nova-lock-screen/v)](https://packagist.org/packages/lahirulhr/nova-lock-screen) [![Total Downloads](http://poser.pugx.org/lahirulhr/nova-lock-screen/downloads)](https://packagist.org/packages/lahirulhr/nova-lock-screen) [![Latest Unstable Version](http://poser.pugx.org/lahirulhr/nova-lock-screen/v/unstable)](https://packagist.org/packages/lahirulhr/nova-lock-screen) [![License](http://poser.pugx.org/lahirulhr/nova-lock-screen/license)](https://packagist.org/packages/lahirulhr/nova-lock-screen) [![PHP Version Require](http://poser.pugx.org/lahirulhr/nova-lock-screen/require/php)](https://packagist.org/packages/lahirulhr/nova-lock-screen)
+
 The lock screen is a simple security feature that works as locking overlay over the NOVA dashboard. If the user is idle for given timeout, the lockscreen will be activated automatically. Then the user needs to enter login password again to continue their session.
 
 ### View
